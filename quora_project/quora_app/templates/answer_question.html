@@ -1,0 +1,10 @@
+{% block content %}
+  <h2>Answer the Question</h2>
+  <p>Question: {{ question.text }}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Answer</button>
+  </form>
+  <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

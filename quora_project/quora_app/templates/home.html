@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  
+  <h1>Quora Clone</h1>
+  <h2>Recent Questions</h2>
+  <ul>
+    {% for question in questions %}
+      <li>
+        <strong>{{ question.text }}</strong><hr>
+      
+        <button><a href="{% url 'answer' question.id %}">Answer</a></button>
+        <ul>
+          {% for answer in answers %}
+            {% if answer.question == question %}
+              <li>
+                {{ answer.text }}
+                &nbsp;&nbsp;&nbsp;<button style="background-color: #4CAF50; /* Green */
+                color: white;"><a href="{% url 'like_answer' answer.id %}">
+                
+                  {% if request.user in answer.likes.all %}
+                    Unlike
+                  {% else %}
+                    Like
+                  {% endif %}
+                </a></button>
+                <strong>({{ answer.total_likes }} likes)</strong>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'ask' %}">Ask a Question</a>
+{% endblock %}
+
